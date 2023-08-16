@@ -1,0 +1,49 @@
+saturntraincrossspecies:
+  label: saturn_label
+  batchkey: batch_label
+  condaenv: saturn
+  ngene: 5000
+  nhvg: 8000
+  hvgspan: 1.0
+  mapfile: null
+  epoch: 50
+  gpu:
+  - 0
+  - 0
+  - 1
+  - 1
+  - 2
+  - 2
+  - 3
+  - 3
+  nseed: 8
+saturntrainh5ad2umap:
+  condaenv: saturn
+  label:
+  - batch_labels
+  - labels
+  - labels2
+  - ref_labels
+  - species
+  seed: 12345
+  resolution: 0.5
+  neighbor: 15
+  npc: null
+saturnh5adumap2seuratdimplotsplitby:
+  condaenv: saturn
+  group:
+  - labels
+  - labels2
+  - ref_labels
+  split: species
+  height: 6
+  width: 6
+  legendwidth: 4
+saturnh5adumap2seuratclustree:
+  condaenv: saturn
+  group: labels
+  color: species
+  reorder: F
+  numericorder: F
+  height: 7.5
+  width: 6

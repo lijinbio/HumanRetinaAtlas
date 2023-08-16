@@ -1,0 +1,32 @@
+saturnh5adlatent2cntclassifier:
+  condaenv: saturn
+  model:
+  - NearestCentroid
+  modelby:
+    NearestCentroid: {}
+  trainlabel: labels
+  predictlabel: labels
+  threshold: [] # turn off predictproba for NearestCentroid
+  seed: 12345
+  runtrain: true
+  runtrianby: false
+  runtrainbywoscale: false
+  modelbyname:
+  - NearestCentroid
+rtable2sankeydiagram:
+  condaenv: saturn
+  iteration: 32
+tsvfileaddfromcolumn:
+  key:
+  - predict
+  - predict_max
+saturncntclassifierpred2tab:
+  xlabel:
+  - saturn_label
+  - group1
+  - group2
+  - group3
+  - cluster2
+  ylabel:
+  - predict
+  - predict_max

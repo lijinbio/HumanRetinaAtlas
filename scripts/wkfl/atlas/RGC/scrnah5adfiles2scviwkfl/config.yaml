@@ -1,0 +1,44 @@
+scrnah5adsubsetbyvaluecounts:
+  condaenv: u_scvi
+  label: sampleid
+  ncell: 10
+scrnascvih5ad:
+  condaenv: u_scvi
+  batchkey: sampleid
+  nlayer: 2
+  nlatent: 30
+  ntop: 10000
+  flavor: seurat
+  seed: 12345
+  epoch: null
+  gpu: null
+  normcounts: false
+scrnascanpycombinerawcountsscvi:
+  condaenv: u_scvi
+  obs:
+  - _scvi_batch
+  - _scvi_labels
+  - _scvi_local_l_mean
+  - _scvi_local_l_var
+  invert: true
+scrnah5ad2normscale:
+  condaenv: u_scvi
+  scale: false
+scrnah5adumapby:
+  condaenv: u_scvi
+  width: 5
+  height: 5
+  notitle: true
+  label:
+  - DF.classifications
+  - age
+  - donor
+  - gender
+  - race
+  - sampleid
+  - scpred_prediction
+  - leiden
+  - nCount_RNA
+  - nFeature_RNA
+  - pANN
+  - percent.mt

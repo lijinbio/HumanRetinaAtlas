@@ -1,0 +1,55 @@
+from snakemake.utils import min_version
+min_version("7.0")
+
+include: "config.smk"
+
+rule all:
+  input:
+    expand(
+      [
+        "saturnh5adlatent2cntclassifier/{name}/train",
+        "saturnh5adlatent2cntclassifier/{name}/train_predict",
+        "saturnh5adlatent2cntclassifier/{name}/train_predictproba",
+        "tsvfileaddfromcolumn/{name}/train_predict",
+        "tsvfileaddfromcolumn/{name}/train_predict_saturncntclassifierpred2tab",
+        "tsvfileaddfromcolumn/{name}/train_predict_rtable2sankeydiagram",
+        "tsvfileaddfromcolumn/{name}/train_predictproba",
+        "tsvfileaddfromcolumn/{name}/train_predictproba_saturncntclassifierpred2tab",
+        "tsvfileaddfromcolumn/{name}/train_predictproba_rtable2sankeydiagram",
+      ],
+      name=bname,
+    ) if config['saturnh5adlatent2cntclassifier']['runtrain'] else [],
+    expand(
+      [
+        "saturnh5adlatent2cntclassifier/{name}/trainby",
+        "saturnh5adlatent2cntclassifier/{name}/trainby_predict",
+        "saturnh5adlatent2cntclassifier/{name}/trainby_predictproba",
+        "tsvfileaddfromcolumn/{name}/trainby_predict",
+        "tsvfileaddfromcolumn/{name}/trainby_predict_saturncntclassifierpred2tab",
+        "tsvfileaddfromcolumn/{name}/trainby_predict_rtable2sankeydiagram",
+        "tsvfileaddfromcolumn/{name}/trainby_predictproba",
+        "tsvfileaddfromcolumn/{name}/trainby_predictproba_saturncntclassifierpred2tab",
+        "tsvfileaddfromcolumn/{name}/trainby_predictproba_rtable2sankeydiagram",
+      ],
+      name=bname,
+    ) if config['saturnh5adlatent2cntclassifier']['runtrianby'] else [],
+    expand(
+      [
+        "saturnh5adlatent2cntclassifier/{name}/trainby_woscale",
+        "saturnh5adlatent2cntclassifier/{name}/trainby_woscale_predict",
+        "saturnh5adlatent2cntclassifier/{name}/trainby_woscale_predictproba",
+        "tsvfileaddfromcolumn/{name}/trainby_woscale_predict",
+        "tsvfileaddfromcolumn/{name}/trainby_woscale_predict_saturncntclassifierpred2tab",
+        "tsvfileaddfromcolumn/{name}/trainby_woscale_predict_rtable2sankeydiagram",
+        "tsvfileaddfromcolumn/{name}/trainby_woscale_predictproba",
+        "tsvfileaddfromcolumn/{name}/trainby_woscale_predictproba_saturncntclassifierpred2tab",
+        "tsvfileaddfromcolumn/{name}/trainby_woscale_predictproba_rtable2sankeydiagram",
+      ],
+      name=bname,
+    ) if config['saturnh5adlatent2cntclassifier']['runtrainbywoscale'] else [],
+
+
+include: "train.smk"
+include: "trainby.smk"
+include: "trainby_woscale.smk"
+

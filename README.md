@@ -1,4 +1,4 @@
 # HumanRetinaAtlas
 
-Scripts and documents for Human retina atlas.
+Scripts for human retina atlas.
 

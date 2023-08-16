@@ -1,0 +1,77 @@
+rmatrix2normheatmap:
+  key:
+  - leiden
+  label:
+  - sampleid
+  - donor
+  height: 7.5
+  width: 5
+  size: 5
+  angle: 90
+  display:
+  - T
+  - C
+scrnascanpypldotplot:
+  height: 8
+  width: 8
+  group:
+  - leiden
+  norm: true
+  dendrogram: true
+  marker: /storage/chen/home/u236923/.local/jinliwrapper/src/retinamarkermajortype/data/hs_RGC.txt.gz
+scrnascanpyplviolin:
+  height: 5
+  width: 10
+  group:
+  - leiden
+  key:
+  - nCount_RNA
+  - nFeature_RNA
+  - pANN
+  - percent.mt
+  norm: true
+  angle: 90
+scrnah5adumapby:
+  condaenv: null
+  width: 5
+  height: 5
+  label:
+  - sampleid
+  - leiden
+  - nCount_RNA
+  - nFeature_RNA
+  - percent.mt
+scrnah5ad2tlrankgenesgroups:
+  condaenv: null
+  group:
+  - leiden
+  ngene: 100
+  hvg: true
+  batchkey: sampleid
+  ntop: 10000
+  flavor: seurat
+  ntoprank: 20
+  marker: /storage/chen/home/u236923/.local/jinliwrapper/src/merscopegenes/data/v2//hs.txt.gz
+scrnah5ad2normscale:
+  condaenv: null
+  scale: false
+scrnah5adfeatureplotumap:
+  width: 5
+  height: 5
+  feature:
+  - CD74
+  - C1QA
+  - C1QB
+  norm: true
+scrnah5adscvi2sccaf:
+  skip: true
+  condaenv: null
+  key:
+  - leiden
+  catcode:
+  - leiden_1
+  acc:
+  - 0.95
+  - 0.98
+  seed: 12345
+  numthreads: 16

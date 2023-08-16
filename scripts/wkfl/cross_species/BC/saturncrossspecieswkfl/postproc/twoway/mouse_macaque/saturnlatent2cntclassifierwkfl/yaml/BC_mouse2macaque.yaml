@@ -1,0 +1,7 @@
+- species: macaque
+  path: /storage/singlecell/jinli/wkfl/atlashumanprj/integration/snRNA/cross_species/saturncrossspecieswkfl/BC/s2k/n5k/scrnah5adsplitby/BC_twoway_mouse2macaque/BC_twoway_mouse2macaque_macaque.h5ad
+  metadata: /storage/singlecell/jinli/wkfl/atlashumanprj/integration/snRNA/cross_species/saturncrossspecieswkfl/BC/s2k/n5k/scrnah5adsubsetbyvaluecounts/BC_twoway_mouse2macaque/macaque_obs.txt.gz
+  classifier: predict
+- species: mouse
+  path: /storage/singlecell/jinli/wkfl/atlashumanprj/integration/snRNA/cross_species/saturncrossspecieswkfl/BC/s2k/n5k/scrnah5adsplitby/BC_twoway_mouse2macaque/BC_twoway_mouse2macaque_mouse.h5ad
+  classifier: train

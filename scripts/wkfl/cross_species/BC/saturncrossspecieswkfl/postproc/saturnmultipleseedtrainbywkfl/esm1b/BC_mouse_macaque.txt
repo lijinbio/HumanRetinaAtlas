@@ -1,0 +1,4 @@
+species	path	embedding_path
+human	/storage/singlecell/jinli/wkfl/atlashumanprj/integration/snRNA/cross_species/saturncrossspecieswkfl/BC/s2k/n5k/scrnah5adsubsetbyvaluecounts/BC_mouse_macaque/human.h5ad	/storage/singlecell/jinli/resource/saturn/protein_embeddings/protein_embeddings_export/ESM1b/human_embedding.torch
+mouse	/storage/singlecell/jinli/wkfl/atlashumanprj/integration/snRNA/cross_species/saturncrossspecieswkfl/BC/s2k/n5k/scrnah5adsubsetbyvaluecounts/BC_mouse_macaque/mouse.h5ad	/storage/singlecell/jinli/resource/saturn/protein_embeddings/protein_embeddings_export/ESM1b/mouse_embedding.torch
+macaque	/storage/singlecell/jinli/wkfl/atlashumanprj/integration/snRNA/cross_species/saturncrossspecieswkfl/BC/s2k/n5k/scrnah5adsubsetbyvaluecounts/BC_mouse_macaque/macaque.h5ad	/storage/singlecell/jinli/resource/saturn/protein_embeddings/protein_embeddings_export/ESM1b/macaca_fascicularis_embedding.torch

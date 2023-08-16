@@ -1,0 +1,12 @@
+- species: macaque
+  path: /storage/singlecell/jinli/wkfl/atlashumanprj/integration/snRNA/cross_species/preproc/macaque/scrnah5adsplitby/full_BC.h5ad
+  embedding_path: /storage/singlecell/jinli/resource/saturn/protein_embeddings/protein_embeddings_export/ESM2/macaca_fascicularis_embedding.torch
+  saturn_label: group1
+  batch_label: replicateid
+  classifier: predict
+- species: mouse
+  path: /storage/singlecell/jinli/wkfl/atlashumanprj/integration/snRNA/cross_species/preproc/mouse/clean/BC.h5ad
+  embedding_path: /storage/singlecell/jinli/resource/saturn/protein_embeddings/protein_embeddings_export/ESM2/mouse_embedding.torch
+  saturn_label: subclass
+  batch_label: sampleid
+  classifier: train

@@ -1,0 +1,42 @@
+saturnh5adlatent2cntclassifier:
+  condaenv: saturn
+  model:
+  - LogisticRegression
+  - KNeighborsClassifier
+  - RandomForestClassifier
+  modelby:
+    LogisticRegression:
+      C: 1.0
+    KNeighborsClassifier:
+      n_neighbors: 100
+    RandomForestClassifier: {}
+  trainlabel: labels
+  predictlabel: labels
+  threshold:
+  - 0.55
+  - 0.9
+  seed: 12345
+  runtrain: false
+  runtrianby: true
+  runtrainbywoscale: false
+  modelbyname:
+  - LogisticRegression
+  - KNeighborsClassifier
+  - RandomForestClassifier
+rtable2sankeydiagram:
+  condaenv: saturn
+  iteration: 32
+tsvfileaddfromcolumn:
+  key:
+  - predict
+  - predict_max
+saturncntclassifierpred2tab:
+  xlabel:
+  - saturn_label
+  - group1
+  - group2
+  - group3
+  - cluster2
+  ylabel:
+  - predict
+  - predict_max

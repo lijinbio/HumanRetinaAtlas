@@ -1,0 +1,136 @@
+from snakemake.utils import min_version
+min_version("7.0")
+
+include: "config.smk"
+
+rule all:
+  input:
+    expand(
+      [
+        "saturntraincrossspecies/{name}",
+        "saturntrainh5ad2umap/{name}",
+        "saturnh5adumap2seuratdimplotsplitby/{name}",
+        "saturnh5adumap2seuratclustree/{name}",
+      ],
+      name=bname,
+      ),
+
+rule saturntraincrossspecies:
+  input:
+    infile=get_file,
+  output:
+    outdir=directory("saturntraincrossspecies/{name}"),
+    done="saturntraincrossspecies/{name}/saturn.done",
+  wildcard_constraints:
+    name="[^/]+",
+  threads: workflow.cores # reserve full cores to achieve sequential running of this rule for inputs. Good for GPU parallelization
+  run:
+    import itertools
+    from multiprocess import Pool
+
+    def cmd(*args):
+      seed, gpu=args
+      infile=f"{input.infile}"
+      seeddir=f"{output.outdir}/seed/{seed}"
+      bname=f"{wildcards.name}_{seed}"
+      outfile=f"{output.outdir}/{bname}.h5ad"
+      shell(
+      """
+      {saturntraincrossspecies_cmd} -d "{seeddir}" -b "{bname}" -s "{seed}" -g "{gpu}" -- "{infile}"
+      shopt -s extglob
+      cp -i "{seeddir}"/saturn_results/!(*_ep_*|*_pretrain).h5ad "{outfile}"
+      """
+      )
+
+    available_gpus=config['saturntraincrossspecies']['gpu'] # Available GPUs
+    with Pool(processes=len(available_gpus)) as p:
+      p.starmap(cmd, zip(saturnseed, itertools.cycle(available_gpus)))
+    shell("touch {output.done}")
+
+rule saturntrainh5ad2umap:
+  input:
+    indir="saturntraincrossspecies/{name}",
+    done="saturntraincrossspecies/{name}/saturn.done",
+  output:
+    outdir=directory("saturntrainh5ad2umap/{name}"),
+    done="saturntrainh5ad2umap/{name}/umap.done",
+  wildcard_constraints:
+    name="[^/]+",
+  threads: workflow.cores * 0.5
+  run:
+    import itertools
+    from multiprocess import Pool
+
+    def cmd(*args):
+      seed, =args
+      bname=f"{wildcards.name}_{seed}"
+      infile=f"{input.indir}/{bname}.h5ad"
+      outdir=f"{output.outdir}"
+      shell(
+      """
+      {saturntrainh5ad2umap_cmd} -d "{outdir}" -b "{bname}" -- "{infile}"
+      mergeimg2htmlbyjinja -d "{outdir}" -b "{bname}" -- "{outdir}/figures"/*{bname}*.png
+      """
+      )
+
+    with Pool(processes=threads) as p:
+      p.starmap(cmd, zip(saturnseed))
+    shell("touch {output.done}")
+
+rule saturnh5adumap2seuratdimplotsplitby:
+  input:
+    indir="saturntrainh5ad2umap/{name}",
+    done="saturntrainh5ad2umap/{name}/umap.done",
+  output:
+    outdir=directory("saturnh5adumap2seuratdimplotsplitby/{name}"),
+    done="saturnh5adumap2seuratdimplotsplitby/{name}/dimplot.done",
+  wildcard_constraints:
+    name="[^/]+",
+  threads: workflow.cores * 0.5
+  run:
+    import itertools
+    from multiprocess import Pool
+
+    def cmd(*args):
+      seed, =args
+      bname=f"{wildcards.name}_{seed}"
+      infile=f"{input.indir}/{bname}.h5ad"
+      outdir=f"{output.outdir}"
+      shell(
+      """
+      {saturnh5adumap2seuratdimplotsplitby_cmd} -d "{outdir}" -b "{bname}" -- "{infile}"
+      mergeimg2htmlbyjinja -d "{outdir}" -b "{bname}" -- "{outdir}"/*{bname}*.png
+      """
+      )
+
+    with Pool(processes=threads) as p:
+      p.starmap(cmd, zip(saturnseed))
+    shell("touch {output.done}")
+
+rule saturnh5adumap2seuratclustree:
+  input:
+    indir="saturntraincrossspecies/{name}",
+    done="saturntraincrossspecies/{name}/saturn.done",
+  output:
+    outdir=directory("saturnh5adumap2seuratclustree/{name}"),
+    done="saturnh5adumap2seuratclustree/{name}/clustree.done",
+  wildcard_constraints:
+    name="[^/]+",
+  run:
+    import itertools
+    from multiprocess import Pool
+
+    def cmd(*args):
+      seed, =args
+      bname=f"{wildcards.name}_{seed}"
+      infile=f"{input.indir}/{bname}.h5ad"
+      outdir=f"{output.outdir}"
+      shell(
+      """
+      {saturnh5adumap2seuratclustree_cmd} -d "{outdir}" -b "{bname}" -- "{infile}"
+      """
+      )
+
+    with Pool(processes=threads) as p:
+      p.starmap(cmd, zip(saturnseed))
+    shell("touch {output.done}")

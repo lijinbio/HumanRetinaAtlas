@@ -1,0 +1,61 @@
+from snakemake.utils import min_version
+min_version("7.0")
+import sys
+import shutil
+
+include: "config.smk"
+
+if len(config['scrnah5adscvi2leidensbyresolution']['label'])==1:
+  shutil.copy2(f"{absdir}/snakemake/resolution1.smk", outdir)
+  rule all:
+    input:
+      expand(
+      [
+        "{name}_{res0}_obs.txt.gz",
+        "{name}_leiden_0.html",
+        "ncluster.txt.gz",
+      ],
+      name=bname,
+      res0=config['scrnah5adscvi2leidensbyresolution'][config['scrnah5adscvi2leidensbyresolution']['label'][0]],
+      )
+  include: "resolution1.smk"
+
+elif len(config['scrnah5adscvi2leidensbyresolution']['label'])==2:
+  shutil.copy2(f"{absdir}/snakemake/resolution2.smk", outdir)
+  rule all:
+    input:
+      expand(
+      [
+        "{name}_{res0}_{res1}_obs.txt.gz",
+        "{name}_leiden_0.html",
+        "{name}_leiden_1.html",
+        "ncluster.txt.gz",
+      ],
+      name=bname,
+      res0=config['scrnah5adscvi2leidensbyresolution'][config['scrnah5adscvi2leidensbyresolution']['label'][0]],
+      res1=config['scrnah5adscvi2leidensbyresolution'][config['scrnah5adscvi2leidensbyresolution']['label'][1]],
+      )
+  include: "resolution2.smk"
+
+elif len(config['scrnah5adscvi2leidensbyresolution']['label'])==3:
+  shutil.copy2(f"{absdir}/snakemake/resolution3.smk", outdir)
+  rule all:
+    input:
+      expand(
+      [
+        "{name}_{res0}_{res1}_{res2}_obs.txt.gz",
+        "{name}_leiden_0.html",
+        "{name}_leiden_1.html",
+        "{name}_leiden_2.html",
+        "ncluster.txt.gz",
+      ],
+      name=bname,
+      res0=config['scrnah5adscvi2leidensbyresolution'][config['scrnah5adscvi2leidensbyresolution']['label'][0]],
+      res1=config['scrnah5adscvi2leidensbyresolution'][config['scrnah5adscvi2leidensbyresolution']['label'][1]],
+      res2=config['scrnah5adscvi2leidensbyresolution'][config['scrnah5adscvi2leidensbyresolution']['label'][2]],
+      )
+  include: "resolution3.smk"
+
+else:
+  print(f"Levels are not implemented. {config['scrnah5adscvi2leidensbyresolution']['label']=}")
+  sys.exit(-1)
